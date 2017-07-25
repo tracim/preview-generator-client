@@ -1,7 +1,7 @@
 {
-  "name": "react-init",
+  "name": "previewGenerator",
   "version": "1.0.0",
-  "description": "Boilerplate for react app",
+  "description": "Display a preview of the file you are looking in tracim",
   "main": "src/index.jsx",
   "scripts": {
     "servdev": "NODE_ENV=development && webpack-dev-server --port 8083 --watch --colors --inline --hot --content-base dist/",
@@ -19,7 +19,6 @@
     "ignore": []
   },
   "devDependencies": {
-    "json-server": "^0.9.4",
     "prop-types": "^15.5.10",
     "webpack-dev-server": "^2.3.0"
   },
@@ -36,20 +35,14 @@
     "classnames": "^2.2.5",
     "css-loader": "^0.28.4",
     "file-loader": "^0.10.0",
-    "lodash.reject": "^4.6.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-redux": "^5.0.5",
-    "redux": "^3.7.2",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0",
     "standard": "^8.6.0",
     "standard-loader": "^5.0.0",
     "style-loader": "^0.18.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "url-loader": "^0.5.7",
-    "webpack": "^2.2.1",
-    "whatwg-fetch": "^2.0.2"
+    "webpack": "^2.2.1"
   }
 }
