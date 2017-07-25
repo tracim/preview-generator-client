@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+  <div id='previewGenerator'></div>
+
+  <script src='previewGenerator.vendor.bundle.js' type="text/javascript"></script>
+  <script src="previewGenerator.app.entry.js" type="text/javascript"></script>
+  <script src='https://use.fontawesome.com/3a9186f6b5.js'></script>
+  <script type="text/javascript">
+    (function initialisePreviewGenerator () {
+      previewGenerator(
+        document.getElementById('previewGenerator'),
+        [
+          'preview_generator_output_exemple.jpg',
+          'aquali.png',
+          'arcanin.png',
+          'evoli.png',
+          'feunard.png'
+        ],
+        5,
+        '/previews/__FILE_ID__/pages/__CURRENT_PAGE__/__DOWNLOAD_TYPE__?revision_id=__REVISION_ID__',
+        {
+          id: '1',
+          name: 'exemple.jpg',
+          selectedRevision: '123456',
+          weight: ' 18.850 ko',
+          height: '300',
+          modifiedAt: 'juillet 19 at 01:55',
+          owner: 'Global manager',
+          sourceLink: '/workspace/29/folders/170/files/274/download?revision_id=latest'
+        }
+      )
+    })()
+  </script>
+</body>
+</html>
