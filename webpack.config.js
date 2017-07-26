@@ -48,7 +48,7 @@ module.exports = {
     //   'Access-Control-Allow-Origin': '*'
     // }
   },
-  devtool: 'eval-source-map',
+  devtool: isProduction ? false : 'eval-source-map',
   module: {
     rules: [{
       test: /\.jsx?$/,

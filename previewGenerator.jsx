@@ -2,13 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import Lightbox from 'react-images'
 require('./style.styl')
 
 class PreviewGenerator extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentPage: 0
+      currentPage: 0,
+      lightboxOpen: false
     }
   }
 
@@ -24,6 +26,9 @@ class PreviewGenerator extends React.Component {
       .replace('__CURRENT_PAGE__', this.state.currentPage)
       .replace('__DOWNLOAD_TYPE__', linkType)
       .replace('__REVISION_ID__', this.props.file.selectedRevision)
+
+  handleOpenLightbox = () => this.setState({lightboxOpen: true})
+  handleCloseLightbox = () => this.setState({lightboxOpen: false})
 
   render () {
     const { urlList, file, nbPage } = this.props
@@ -43,11 +48,17 @@ class PreviewGenerator extends React.Component {
               <i className='fa fa-chevron-left' />
             </div>
           }
-          <div className='previewGenerator__preview__img'>
-            <a href={linkImgHd}>
-              <img src={urlList[currentPage]} />
-            </a>
+          <div className='previewGenerator__preview__img' onClick={this.handleOpenLightbox}>
+            <img src={urlList[currentPage]} />
           </div>
+          <Lightbox
+            images={[{src: linkImgHd}]}
+            isOpen={this.state.lightboxOpen}
+            onClose={this.handleCloseLightbox}
+            backdropClosesModal
+            closeButtonTitle='Fermer'
+            showImageCount={false}
+          />
           { nbPage > 1 &&
             <div
               className={classnames('previewGenerator__preview__arrow', 'arrowright', {disabled: currentPage >= nbPage - 1})}
