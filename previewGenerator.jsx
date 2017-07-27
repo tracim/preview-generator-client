@@ -10,20 +10,27 @@ class PreviewGenerator extends React.Component {
     super(props)
     this.state = {
       currentPage: 0,
-      lightboxOpen: false
+      lightboxOpen: false,
+      lightboxCurrentPage: 0
     }
   }
 
-  handleClickLeftArrow = () => this.state.currentPage > 0 && this.setState({...this.state, currentPage: this.state.currentPage - 1})
-  handleClickRightArrow = () => this.state.currentPage < this.props.nbPage - 1 && this.setState({...this.state, currentPage: this.state.currentPage + 1})
+  handleClickLeftArrow = () => this.state.currentPage > 0 && this.setState(prevState => ({
+    currentPage: prevState.currentPage - 1,
+    lightboxCurrentPage: prevState.currentPage - 1
+  }))
+  handleClickRightArrow = () => this.state.currentPage < this.props.nbPage - 1 && this.setState(prevState => ({
+    currentPage: prevState.currentPage + 1,
+    lightboxCurrentPage: prevState.currentPage + 1
+  }))
 
   handleClickDlSource = () => window.location.assign(this.props.file.sourceLink)
   handleClickDlAllPage = () => window.location.assign(this.generateFileLink('download_pdf_full'))
   handleClickDlOnePage = () => window.location.assign(this.generateFileLink('download_pdf_one'))
 
-  generateFileLink = linkType => this.props.urlTemplate
+  generateFileLink = (linkType, pageNb = '') => this.props.urlTemplate
       .replace('__FILE_ID__', this.props.file.id)
-      .replace('__CURRENT_PAGE__', this.state.currentPage)
+      .replace('__CURRENT_PAGE__', pageNb || this.state.currentPage)
       .replace('__DOWNLOAD_TYPE__', linkType)
       .replace('__REVISION_ID__', this.props.file.selectedRevision)
 
@@ -33,8 +40,6 @@ class PreviewGenerator extends React.Component {
   render () {
     const { urlList, file, nbPage } = this.props
     const { currentPage } = this.state
-
-    const linkImgHd = this.generateFileLink('high_quality')
 
     return (
       <div className='previewGenerator'>
@@ -52,12 +57,13 @@ class PreviewGenerator extends React.Component {
             <img src={urlList[currentPage]} />
           </div>
           <Lightbox
-            images={[{src: linkImgHd}]}
+            images={urlList.map((img, i) => ({src: this.generateFileLink('high_quality', i)}))}
+            currentImage={this.state.lightboxCurrentPage}
             isOpen={this.state.lightboxOpen}
-            onClose={this.handleCloseLightbox}
+            onClose={() => this.setState({lightboxOpen: false, lightboxCurrentPage: currentPage})}
+            onClickPrev={() => this.setState(prevState => ({lightboxCurrentPage: prevState.lightboxCurrentPage - 1}))}
+            onClickNext={() => this.setState(prevState => ({lightboxCurrentPage: prevState.lightboxCurrentPage + 1}))}
             backdropClosesModal
-            closeButtonTitle='Fermer'
-            showImageCount={false}
           />
           { nbPage > 1 &&
             <div
@@ -76,7 +82,7 @@ class PreviewGenerator extends React.Component {
               <span>Fichier : </span>{file.name}
             </div>
             <div className='previewGenerator__data__info__size'>
-              <span>Poid : </span>{file.weight}
+              <span>Poids : </span>{file.weight}
             </div>
             <div className='previewGenerator__data__info__modifiedat'>
               Modifié le <span>{file.modifiedAt}</span> par <span>{file.owner}</span>
