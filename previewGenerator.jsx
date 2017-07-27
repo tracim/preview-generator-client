@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Lightbox from 'react-images'
+import { setLang, __ } from './trad.js'
 require('./style.styl')
 
 class PreviewGenerator extends React.Component {
   constructor (props) {
     super(props)
+    setLang(props.lang)
     this.state = {
       currentPage: 0,
       lightboxOpen: false,
@@ -64,6 +66,9 @@ class PreviewGenerator extends React.Component {
             onClickPrev={() => this.setState(prevState => ({lightboxCurrentPage: prevState.lightboxCurrentPage - 1}))}
             onClickNext={() => this.setState(prevState => ({lightboxCurrentPage: prevState.lightboxCurrentPage + 1}))}
             backdropClosesModal
+            leftArrowTitle={__('Previous')}
+            rightArrowTitle={__('Next')}
+            closeButtonTitle={__('Close')}
           />
           { nbPage > 1 &&
             <div
@@ -79,13 +84,13 @@ class PreviewGenerator extends React.Component {
         <div className='previewGenerator__data'>
           <div className='previewGenerator__data__info'>
             <div className='previewGenerator__data__info__title'>
-              <span>Fichier : </span>{file.name}
+              <span>{__('File: ')}</span>{file.name}
             </div>
             <div className='previewGenerator__data__info__size'>
-              <span>Poids : </span>{file.weight}
+              <span>{__('Size: ')}</span>{file.weight}
             </div>
             <div className='previewGenerator__data__info__modifiedat'>
-              Modifié le <span>{file.modifiedAt}</span> par <span>{file.owner}</span>
+              {__('Last modification ')}<span>{file.modifiedAt}</span>{__(' by ')}<span>{file.owner}</span>
             </div>
 
             <div className='previewGenerator__data__action'>
@@ -107,6 +112,7 @@ class PreviewGenerator extends React.Component {
 }
 
 const propTypes = {
+  lang: PropTypes.string.isRequired,
   urlList: PropTypes.array.isRequired,
   nbPage: PropTypes.number.isRequired,
   file: PropTypes.shape({
@@ -125,9 +131,19 @@ const propTypes = {
 PreviewGenerator.PropTypes = propTypes
 
 // wrapper for app launcher (it's better to have the wrapper in a separated file but since this app can only be used for tracim, it's not required)
-const previewGenerator = (anchor, urlList, nbPage, urlTemplate, file) => {
-  [anchor, urlList, nbPage, file].map(oneParam => oneParam === undefined).includes(true)
-    ? console.error(`Error : Wrong previewGenerator() call. previewGenerator(anchor, urlList, nbPage, urlTemplate, file: {id, name, selectedRevision, height, weight, modifiedAt, owner, sourceLink, pdfAvailable})`)
-    : ReactDOM.render(<PreviewGenerator urlList={urlList} nbPage={nbPage} urlTemplate={urlTemplate} file={file} />, anchor)
+const previewGenerator = (anchor, lang, urlList, nbPage, urlTemplate, file) => {
+  [anchor, lang, urlList, nbPage, urlTemplate, file].map(oneParam => oneParam === undefined).includes(true)
+    ? console.error(`Error : Wrong previewGenerator() call. previewGenerator(anchor, lang, urlList, nbPage, urlTemplate, file: {
+      id,
+      name,
+      selectedRevision,
+      height,
+      weight,
+      modifiedAt,
+      owner,
+      sourceLink,
+      pdfAvailable
+    })`)
+    : ReactDOM.render(<PreviewGenerator lang={lang} urlList={urlList} nbPage={nbPage} urlTemplate={urlTemplate} file={file} />, anchor)
 }
 module.exports = previewGenerator
