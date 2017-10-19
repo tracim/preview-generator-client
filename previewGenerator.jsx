@@ -97,12 +97,16 @@ class PreviewGenerator extends React.Component {
               <div className='previewGenerator__data__action__downloadsource btn btn-success' title='Télécharger le fichier' onClick={this.handleClickDlSource}>
                 <i className='fa fa-download fa-2x fa-fw' />
               </div>
-              <div className='previewGenerator__data__action__downloadallpdf btn btn-default' title='Télécharger toutes les pages en pdf' onClick={this.handleClickDlAllPage}>
-                <i className='fa fa-file-zip-o fa-1x fa-fw' />
-              </div>
-              <div className='previewGenerator__data__action__downloadsinglepdf btn btn-default' title='Télécharger cette page en pdf' onClick={this.handleClickDlOnePage}>
-                <i className='fa fa-file-pdf-o fa-1x fa-fw' />
-              </div>
+              { file.pdfAvailable && (
+                <div className='previewGenerator__data__action__downloadallpdf btn btn-default' title='Télécharger toutes les pages en pdf' onClick={this.handleClickDlAllPage}>
+                  <i className='fa fa-file-zip-o fa-1x fa-fw' />
+                </div>
+              )}
+              { file.pdfAvailable && (
+                <div className='previewGenerator__data__action__downloadsinglepdf btn btn-default' title='Télécharger cette page en pdf' onClick={this.handleClickDlOnePage}>
+                  <i className='fa fa-file-pdf-o fa-1x fa-fw' />
+                </div>
+              )}
             </div>
           </div>
         </div>
