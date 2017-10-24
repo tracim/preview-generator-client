@@ -30,9 +30,9 @@ class PreviewGenerator extends React.Component {
   handleClickDlAllPage = () => window.location.assign(this.generateFileLink('download_pdf_full'))
   handleClickDlOnePage = () => window.location.assign(this.generateFileLink('download_pdf_one'))
 
-  generateFileLink = (linkType, pageNb = '') => this.props.urlTemplate
+  generateFileLink = (linkType, pageNb) => this.props.urlTemplate
       .replace('__FILE_ID__', this.props.file.id)
-      .replace('__CURRENT_PAGE__', pageNb || this.state.currentPage)
+      .replace('__CURRENT_PAGE__', pageNb)
       .replace('__DOWNLOAD_TYPE__', linkType)
       .replace('__REVISION_ID__', this.props.file.selectedRevision)
 
