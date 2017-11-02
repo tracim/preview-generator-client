@@ -5,5 +5,8 @@
   "File: ": "Fichier : ",
   "Size: ": "Taille : ",
   "Last modification ": "Modifié le ",
-  " by ": " par "
+  " by ": " par ",
+  "Download file": "Télécharger le fichier",
+  "Download all pages as pdf": "Télécharger toutes les pages en pdf",
+  "Download this page as pdf": "Télécharger cette page en pdf"
 }
